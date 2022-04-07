@@ -1,0 +1,25 @@
+schemaVersion: 2.1.0
+metadata:
+  name: OpenJDK11
+components:
+  - name: tools
+    container:
+      image: quay.io/devfile/universal-developer-image:ubi8-0e189d9
+      memoryLimit: 500Mi
+
+      endpoints:
+        - name: debug
+          exposure: none
+          protocol: tcp
+          targetPort: 5005
+
+commands:
+  - id: run
+    exec:
+      label: "実行"
+      component: tools
+      workingDir: ${PROJECT_SOURCE}/ex00
+      commandLine: "javac -encoding UTF-8 ./target/*.java && java -Dfile.encoding=UTF-8 ./target/*"
+      group:
+        kind: run
+        isDefault: true
